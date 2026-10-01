@@ -1,0 +1,1480 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111111">
+
+    <title>Your bag | Electrokraft</title>
+
+    <style>
+        :root {
+            color-scheme: dark;
+            --paper: #f5f5f1;
+            --muted: #999;
+            --line: #303030;
+            --panel: #191919;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #111;
+            color: var(--paper);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                "Segoe UI", sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .site-nav {
+            min-height: 72px;
+            border-bottom: 1px solid #292929;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: min(1120px, calc(100% - 40px));
+            margin: auto;
+        }
+
+        .brand {
+            color: white;
+            font-weight: 750;
+            letter-spacing: -.04em;
+        }
+
+        .brand-mark {
+            display: inline-grid;
+            width: 28px;
+            height: 28px;
+            margin-right: 9px;
+            place-items: center;
+            border: 1px solid #888;
+            border-radius: 50%;
+            font-size: .72rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            color: #aaa;
+            font-size: .86rem;
+        }
+
+        main {
+            width: min(1120px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 54px 0 80px;
+        }
+
+        .eyebrow {
+            margin: 0 0 10px;
+            color: #92938d;
+            font-size: .68rem;
+            font-weight: 650;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: -.06em;
+        }
+
+        .intro {
+            margin: 10px 0 30px;
+            color: var(--muted);
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(280px, .8fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .items {
+            display: grid;
+            gap: 12px;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 116px minmax(0, 1fr) auto;
+            gap: 20px;
+            align-items: center;
+            padding: 16px;
+            border: 1px solid #292929;
+            border-radius: 6px;
+            background: var(--panel);
+        }
+
+        .product-image {
+            width: 116px;
+            height: 116px;
+            border-radius: 4px;
+            background: #222;
+            object-fit: cover;
+            filter: grayscale(1);
+        }
+
+        .category {
+            margin: 0 0 7px;
+            color: #888;
+            font-size: .67rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .unit-price {
+            margin: 8px 0 0;
+            color: #aaa;
+            font-size: .82rem;
+        }
+
+        .item-end {
+            display: grid;
+            justify-items: end;
+            gap: 14px;
+        }
+
+        .line-total {
+            font-weight: 650;
+            white-space: nowrap;
+        }
+
+        .quantity {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #484848;
+            border-radius: 4px;
+        }
+
+        .quantity button {
+            width: 36px;
+            height: 34px;
+            border: 0;
+            background: transparent;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .quantity button:hover {
+            background: #333;
+        }
+
+        .quantity output {
+            min-width: 34px;
+            text-align: center;
+            font-size: .85rem;
+        }
+
+        .remove {
+            border: 0;
+            padding: 0;
+            background: transparent;
+            color: #999;
+            font: inherit;
+            font-size: .76rem;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .summary {
+            position: sticky;
+            top: 20px;
+            padding: 22px;
+            border: 1px solid #303030;
+            border-radius: 6px;
+            background: #191919;
+        }
+
+        .summary h2 {
+            margin: 0 0 20px;
+            font-size: 1.15rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 13px 0;
+            color: #aaa;
+            font-size: .88rem;
+        }
+
+        .summary-row strong {
+            color: #eee;
+            font-weight: 550;
+        }
+
+        .summary-total {
+            margin-top: 18px;
+            padding-top: 17px;
+            border-top: 1px solid #363636;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .summary-total strong {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .discount-box {
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid #363636;
+        }
+
+        .discount-box label,
+        .emi-box label {
+            display: block;
+            margin-bottom: 7px;
+            color: #aaa;
+            font-size: .78rem;
+        }
+
+        .discount-input,
+        .emi-input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            outline: none;
+            background: #111;
+            color: white;
+            font: inherit;
+        }
+
+        .discount-input:focus,
+        .emi-input:focus {
+            border-color: #aaa;
+        }
+
+        .discount-message {
+            min-height: 18px;
+            margin-top: 7px;
+            color: #999;
+            font-size: .72rem;
+        }
+
+        .checkout {
+            width: 100%;
+            min-height: 50px;
+            margin-top: 18px;
+            border: 1px solid var(--paper);
+            border-radius: 3px;
+            background: var(--paper);
+            color: #111;
+            font: inherit;
+            font-size: .86rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .checkout:hover {
+            background: transparent;
+            color: white;
+        }
+
+        .checkout:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        .delivery {
+            margin: 13px 0 0;
+            color: #858585;
+            font-size: .75rem;
+            line-height: 1.6;
+        }
+
+        .empty {
+            display: none;
+            padding: 50px 20px;
+            border: 1px dashed #393939;
+            border-radius: 5px;
+            color: #aaa;
+            text-align: center;
+        }
+
+        .empty h2 {
+            margin-bottom: 10px;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .continue {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 16px;
+            border: 1px solid #777;
+            border-radius: 3px;
+            font-size: .82rem;
+        }
+
+        .notice {
+            min-height: 1.3em;
+            margin: 12px 0 0;
+            color: #bbb;
+            font-size: .8rem;
+        }
+
+        /* EMI section */
+
+        .emi-section {
+            margin-top: 30px;
+            padding: 25px;
+            border: 1px solid #303030;
+            border-radius: 6px;
+            background: #171717;
+        }
+
+        .emi-section h2 {
+            margin-bottom: 8px;
+            color: white;
+            font-size: 1.4rem;
+        }
+
+        .emi-description {
+            margin-bottom: 22px;
+            color: #999;
+            font-size: .82rem;
+        }
+
+        .emi-form {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .emi-result {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .emi-card {
+            padding: 17px;
+            border: 1px solid #303030;
+            border-radius: 5px;
+            background: #111;
+        }
+
+        .emi-card span {
+            display: block;
+            margin-bottom: 7px;
+            color: #888;
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .emi-card strong {
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            margin-top: 17px;
+            padding: 12px;
+            border: 1px solid #777;
+            border-radius: 4px;
+            background: transparent;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .calculate-btn:hover {
+            background: white;
+            color: #111;
+        }
+
+        .table-heading {
+            margin: 28px 0 12px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .emi-table-container {
+            overflow-x: auto;
+        }
+
+        .emi-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .8rem;
+        }
+
+        .emi-table th,
+        .emi-table td {
+            padding: 12px;
+            border: 1px solid #303030;
+            text-align: right;
+        }
+
+        .emi-table th {
+            background: #222;
+            color: #eee;
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+
+        .emi-table td {
+            color: #aaa;
+        }
+
+        .emi-table th:first-child,
+        .emi-table td:first-child {
+            text-align: center;
+        }
+
+        footer {
+            padding: 22px;
+            border-top: 1px solid #292929;
+            color: #777;
+            text-align: center;
+            font-size: .75rem;
+        }
+
+        @media(max-width:760px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .summary {
+                position: static;
+            }
+
+            .emi-form,
+            .emi-result {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width:520px) {
+            .nav-inner {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 14px 0;
+                gap: 12px;
+            }
+
+            .nav-links {
+                gap: 16px;
+            }
+
+            main {
+                width: calc(100% - 28px);
+                padding-top: 38px;
+            }
+
+            .cart-item {
+                grid-template-columns: 80px minmax(0, 1fr) auto;
+                gap: 12px;
+                padding: 12px;
+            }
+
+            .product-image {
+                width: 80px;
+                height: 90px;
+            }
+
+            .item-end {
+                gap: 10px;
+            }
+
+            .line-total {
+                font-size: .82rem;
+            }
+
+            .quantity button {
+                width: 30px;
+            }
+
+            .emi-section {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="site-nav" aria-label="Main navigation">
+        <div class="nav-inner">
+
+            <a class="brand" href="index.html">
+                <span class="brand-mark">E</span>
+                Electrokraft
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html">Shop</a>
+                <a href="cart.html">
+                    Your bag <span id="nav-count">(0)</span>
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <main>
+
+        <p class="eyebrow">Your selections</p>
+
+        <h1>Your bag</h1>
+
+        <p class="intro">
+            Review your items and adjust quantities before checkout.
+        </p>
+
+
+        <!-- CART SECTION -->
+
+        <section class="cart-layout">
+
+            <div>
+
+                <div class="items" id="cart-items"></div>
+
+                <div class="empty" id="empty-state">
+
+                    <h2>Your bag is empty</h2>
+
+                    <p>
+                        Find something you'll love in our collection.
+                    </p>
+
+                    <a class="continue" href="index.html">
+                        Continue shopping
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORDER SUMMARY -->
+
+            <aside class="summary">
+
+                <h2>Order summary</h2>
+
+                <div class="summary-row">
+                    <span>Items (<span id="item-count">0</span>)</span>
+                    <strong id="subtotal">₹0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Delivery</span>
+                    <strong id="delivery">Free</strong>
+                </div>
+
+
+                <!-- DISCOUNT -->
+
+                <div class="discount-box">
+
+                    <label for="discount">
+                        Discount %
+                    </label>
+
+                    <input
+                        type="number"
+                        id="discount"
+                        class="discount-input"
+                        min="0"
+                        max="100"
+                        value="10"
+                        placeholder="Enter discount %"
+                    >
+
+                    <p class="discount-message" id="discount-message">
+                        10% discount applied
+                    </p>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>Discount amount</span>
+
+                    <strong id="discount-amount">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row summary-total">
+
+                    <span>Amount after reduction</span>
+
+                    <strong id="total">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <button class="checkout" id="buy-now" type="button">
+                    Buy now
+                </button>
+
+                <p class="delivery">
+                    Taxes included. Free delivery on orders over ₹4,000.
+                </p>
+
+                <p class="notice" id="notice"></p>
+
+            </aside>
+
+        </section>
+
+
+        <!-- EMI CALCULATOR -->
+
+        <section class="emi-section">
+
+            <h2>EMI Calculator</h2>
+
+            <p class="emi-description">
+                Calculate the monthly EMI for your purchase.
+                The amount after discount is used as the loan amount.
+            </p>
+
+
+            <div class="emi-form">
+
+                <div>
+                    <label for="loan-amount">
+                        Total Loan Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        id="loan-amount"
+                        class="emi-input"
+                        value="0"
+                        readonly
+                    >
+                </div>
+
+
+                <div>
+                    <label for="interest-rate">
+                        Interest Rate (% per year)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="interest-rate"
+                        class="emi-input"
+                        value="10"
+                        min="0"
+                        step="0.1"
+                    >
+                </div>
+
+
+                <div>
+                    <label for="months">
+                        Number of Months
+                    </label>
+
+                    <input
+                        type="number"
+                        id="months"
+                        class="emi-input"
+                        value="12"
+                        min="1"
+                    >
+                </div>
+
+            </div>
+
+
+            <button
+                class="calculate-btn"
+                id="calculate-emi"
+                type="button"
+            >
+                Calculate EMI
+            </button>
+
+
+            <!-- EMI RESULTS -->
+
+            <div class="emi-result">
+
+                <div class="emi-card">
+
+                    <span>Loan Amount</span>
+
+                    <strong id="emi-loan">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div class="emi-card">
+
+                    <span>EMI Amount</span>
+
+                    <strong id="emi-value">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div class="emi-card">
+
+                    <span>Total Interest</span>
+
+                    <strong id="total-interest">
+                        ₹0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- MONTHLY TABLE -->
+
+            <h3 class="table-heading">
+                Monthly EMI Schedule
+            </h3>
+
+
+            <div class="emi-table-container">
+
+                <table class="emi-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Month</th>
+                            <th>EMI</th>
+                            <th>Principal Amount</th>
+                            <th>Interest</th>
+                            <th>Remaining Balance</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="emi-table-body">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        Electrokraft · Consumer technology, thoughtfully chosen.
+    </footer>
+
+
+    <script>
+
+        /* PRODUCT DETAILS */
+
+        const products = {
+
+            nova: {
+                name: 'Nova Pro Smartphone',
+                category: 'Smartphones',
+                price: 79999,
+                image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80',
+                alt: 'Nova Pro smartphone'
+            },
+
+            studio: {
+                name: 'Studio Wireless Headphones',
+                category: 'Audio',
+                price: 12999,
+                image: 'https://images.unsplash.com/photo-1600019154417-70c9f205f406?auto=format&fit=crop&w=500&q=80',
+                alt: 'Studio wireless headphones'
+            },
+
+            pulse: {
+                name: 'Pulse Smartwatch',
+                category: 'Wearables',
+                price: 18499,
+                image: 'https://images.unsplash.com/photo-1580943943004-6a4697b70059?auto=format&fit=crop&w=500&q=80',
+                alt: 'Pulse smartwatch'
+            },
+
+            air: {
+                name: 'Air 14 Laptop',
+                category: 'Computing',
+                price: 89999,
+                image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500&q=80',
+                alt: 'Air 14 laptop'
+            },
+
+            nothing: {
+                name: 'Nothing Phone (2)',
+                category: 'Smartphones',
+                price: 44999,
+                image: 'https://acko-cms.ackoassets.com/Nothing_Phone_2_2_9da103def9.jpg',
+                alt: 'Nothing Phone (2)'
+            }
+
+        };
+
+
+        /* CURRENCY FUNCTION */
+
+        const money = value => {
+
+            return new Intl.NumberFormat(
+                'en-IN',
+                {
+                    style: 'currency',
+                    currency: 'INR',
+                    maximumFractionDigits: 0
+                }
+            ).format(value);
+
+        };
+
+
+        /* READ CART */
+
+        function readCart() {
+
+            try {
+
+                const data =
+                    JSON.parse(
+                        localStorage.getItem('electrokraft-cart') || '{}'
+                    );
+
+                return data &&
+                    typeof data === 'object'
+                    ? data
+                    : {};
+
+            } catch {
+
+                return {};
+
+            }
+
+        }
+
+
+        /* SAVE CART */
+
+        function saveCart(cart) {
+
+            localStorage.setItem(
+                'electrokraft-cart',
+                JSON.stringify(cart)
+            );
+
+        }
+
+
+        /* CALCULATE DISCOUNT */
+
+        function calculateDiscount() {
+
+            const subtotal =
+                Number(
+                    document.getElementById('subtotal')
+                        .textContent
+                        .replace(/[₹,]/g, '')
+                ) || 0;
+
+            const deliveryText =
+                document.getElementById('delivery').textContent;
+
+            let delivery = 0;
+
+            if (deliveryText !== 'Free') {
+
+                delivery =
+                    Number(
+                        deliveryText.replace(/[₹,]/g, '')
+                    ) || 0;
+
+            }
+
+
+            let discountPercent =
+                Number(
+                    document.getElementById('discount').value
+                ) || 0;
+
+
+            if (discountPercent < 0) {
+
+                discountPercent = 0;
+
+            }
+
+            if (discountPercent > 100) {
+
+                discountPercent = 100;
+
+                document.getElementById('discount').value = 100;
+
+            }
+
+
+            const discountAmount =
+                subtotal * discountPercent / 100;
+
+
+            const finalAmount =
+                subtotal - discountAmount + delivery;
+
+
+            document.getElementById('discount-amount')
+                .textContent = money(discountAmount);
+
+
+            document.getElementById('total')
+                .textContent = money(finalAmount);
+
+
+            document.getElementById('discount-message')
+                .textContent =
+                discountPercent +
+                '% discount applied';
+
+
+            /* Update EMI loan amount */
+
+            document.getElementById('loan-amount')
+                .value = Math.round(finalAmount);
+
+
+            return finalAmount;
+
+        }
+
+
+        /* RENDER CART */
+
+        function render() {
+
+            const cart = readCart();
+
+            const host =
+                document.getElementById('cart-items');
+
+            host.replaceChildren();
+
+
+            let count = 0;
+
+            let subtotal = 0;
+
+
+            Object.entries(cart).forEach(
+                ([id, rawQty]) => {
+
+                    const product = products[id];
+
+                    const qty =
+                        Math.max(
+                            1,
+                            Math.floor(
+                                Number(rawQty) || 1
+                            )
+                        );
+
+
+                    if (!product) {
+                        return;
+                    }
+
+
+                    count += qty;
+
+                    subtotal +=
+                        product.price * qty;
+
+
+                    const article =
+                        document.createElement('article');
+
+                    article.className = 'cart-item';
+
+
+                    article.innerHTML = `
+
+                        <img
+                            class="product-image"
+                            src="${product.image}"
+                            alt="${product.alt}"
+                        >
+
+                        <div>
+
+                            <p class="category">
+                                ${product.category}
+                            </p>
+
+                            <h2>
+                                ${product.name}
+                            </h2>
+
+                            <p class="unit-price">
+                                ${money(product.price)} each
+                            </p>
+
+                        </div>
+
+                        <div class="item-end">
+
+                            <strong class="line-total">
+                                ${money(product.price * qty)}
+                            </strong>
+
+                            <div
+                                class="quantity"
+                                aria-label="Quantity"
+                            >
+
+                                <button
+                                    type="button"
+                                    data-action="decrease"
+                                >
+                                    −
+                                </button>
+
+                                <output>
+                                    ${qty}
+                                </output>
+
+                                <button
+                                    type="button"
+                                    data-action="increase"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <button
+                                class="remove"
+                                type="button"
+                                data-action="remove"
+                            >
+                                Remove
+                            </button>
+
+                        </div>
+
+                    `;
+
+
+                    article
+                        .querySelectorAll('[data-action]')
+                        .forEach(button => {
+
+                            button.addEventListener(
+                                'click',
+                                () => {
+
+                                    const action =
+                                        button.dataset.action;
+
+
+                                    if (
+                                        action === 'remove' ||
+                                        (
+                                            action === 'decrease' &&
+                                            qty <= 1
+                                        )
+                                    ) {
+
+                                        delete cart[id];
+
+                                    }
+
+                                    else {
+
+                                        cart[id] =
+                                            qty +
+                                            (
+                                                action === 'increase'
+                                                    ? 1
+                                                    : -1
+                                            );
+
+                                    }
+
+
+                                    saveCart(cart);
+
+                                    render();
+
+                                }
+                            );
+
+                        });
+
+
+                    host.append(article);
+
+                }
+            );
+
+
+            /* DELIVERY */
+
+            const delivery =
+                count === 0 || subtotal >= 4000
+                    ? 0
+                    : 99;
+
+
+            document.getElementById('item-count')
+                .textContent = count;
+
+
+            document.getElementById('nav-count')
+                .textContent = `(${count})`;
+
+
+            document.getElementById('subtotal')
+                .textContent = money(subtotal);
+
+
+            document.getElementById('delivery')
+                .textContent =
+                delivery
+                    ? money(delivery)
+                    : 'Free';
+
+
+            document.getElementById('buy-now')
+                .disabled = count === 0;
+
+
+            document.getElementById('empty-state')
+                .style.display =
+                count
+                    ? 'none'
+                    : 'block';
+
+
+            /* APPLY DISCOUNT */
+
+            calculateDiscount();
+
+
+            /* CALCULATE EMI */
+
+            calculateEMI();
+
+        }
+
+
+        /* EMI CALCULATOR */
+
+        function calculateEMI() {
+
+            const loanAmount =
+                Number(
+                    document.getElementById('loan-amount').value
+                ) || 0;
+
+
+            const annualRate =
+                Number(
+                    document.getElementById('interest-rate').value
+                ) || 0;
+
+
+            const months =
+                Number(
+                    document.getElementById('months').value
+                ) || 0;
+
+
+            if (
+                loanAmount <= 0 ||
+                months <= 0
+            ) {
+
+                document.getElementById('emi-value')
+                    .textContent = '₹0';
+
+                document.getElementById('total-interest')
+                    .textContent = '₹0';
+
+                document.getElementById('emi-loan')
+                    .textContent = money(loanAmount);
+
+                document.getElementById('emi-table-body')
+                    .innerHTML = '';
+
+                return;
+
+            }
+
+
+            /* Monthly interest rate */
+
+            const monthlyRate =
+                annualRate / 12 / 100;
+
+
+            let emi;
+
+
+            /* EMI FORMULA */
+
+            if (monthlyRate === 0) {
+
+                emi =
+                    loanAmount / months;
+
+            }
+
+            else {
+
+                emi =
+                    loanAmount *
+                    monthlyRate *
+                    Math.pow(
+                        1 + monthlyRate,
+                        months
+                    ) /
+                    (
+                        Math.pow(
+                            1 + monthlyRate,
+                            months
+                        ) - 1
+                    );
+
+            }
+
+
+            const roundedEMI =
+                Math.round(emi);
+
+
+            document.getElementById('emi-loan')
+                .textContent = money(loanAmount);
+
+
+            document.getElementById('emi-value')
+                .textContent = money(roundedEMI);
+
+
+            /* MONTHLY TABLE */
+
+            const tableBody =
+                document.getElementById('emi-table-body');
+
+            tableBody.innerHTML = '';
+
+
+            let balance = loanAmount;
+
+            let totalInterest = 0;
+
+
+            /*
+                FOR LOOP
+
+                This loop creates the EMI
+                table month by month.
+            */
+
+            for (
+                let month = 1;
+                month <= months;
+                month++
+            ) {
+
+                const interest =
+                    balance * monthlyRate;
+
+
+                let principal =
+                    emi - interest;
+
+
+                /* Last payment adjustment */
+
+                if (month === months) {
+
+                    principal = balance;
+
+                }
+
+
+                const currentEMI =
+                    principal + interest;
+
+
+                balance =
+                    balance - principal;
+
+
+                if (balance < 0) {
+
+                    balance = 0;
+
+                }
+
+
+                totalInterest += interest;
+
+
+                const row =
+                    document.createElement('tr');
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${month}
+                    </td>
+
+                    <td>
+                        ${money(currentEMI)}
+                    </td>
+
+                    <td>
+                        ${money(principal)}
+                    </td>
+
+                    <td>
+                        ${money(interest)}
+                    </td>
+
+                    <td>
+                        ${money(balance)}
+                    </td>
+
+                `;
+
+
+                tableBody.appendChild(row);
+
+            }
+
+
+            document.getElementById('total-interest')
+                .textContent =
+                money(totalInterest);
+
+        }
+
+
+        /* DISCOUNT INPUT */
+
+        document.getElementById('discount')
+            .addEventListener(
+                'input',
+                () => {
+
+                    calculateDiscount();
+
+                    calculateEMI();
+
+                }
+            );
+
+
+        /* EMI BUTTON */
+
+        document.getElementById('calculate-emi')
+            .addEventListener(
+                'click',
+                calculateEMI
+            );
+
+
+        /* EMI INPUT CHANGES */
+
+        document.getElementById('interest-rate')
+            .addEventListener(
+                'input',
+                calculateEMI
+            );
+
+
+        document.getElementById('months')
+            .addEventListener(
+                'input',
+                calculateEMI
+            );
+
+
+        /* BUY NOW */
+
+        document.getElementById('buy-now')
+            .addEventListener(
+                'click',
+                () => {
+
+                    document.getElementById('notice')
+                        .textContent =
+                        'Thanks! Checkout is ready to be connected to a payment service.';
+
+                }
+            );
+
+
+        /* UPDATE WHEN CART CHANGES IN ANOTHER TAB */
+
+        window.addEventListener(
+            'storage',
+            render
+        );
+
+
+        /* FIRST LOAD */
+
+        render();
+
+    </script>
+
+</body>
+
+</html>

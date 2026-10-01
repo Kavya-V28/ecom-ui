@@ -1,0 +1,153 @@
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            :root { color-scheme: dark; --paper: #f5f5f1; --line: rgba(255,255,255,.14); }
+            * { box-sizing: border-box; }
+            body { margin: 0; background: #111; color: var(--paper); font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+            .site-nav { min-height: 72px; border-bottom: 1px solid var(--line); background: #111 !important; }
+            .navbar-brand { color: white !important; font-weight: 750; letter-spacing: -.04em; }
+            .navbar-nav { gap: clamp(4px, 1.5vw, 20px); }
+            .navbar-nav .nav-link { color: #aaa !important; font-size: .86rem; }
+            .navbar-nav .nav-link:hover { color: white !important; }
+            .details-wrap { padding-top: clamp(32px, 5vw, 64px); padding-bottom: 64px; }
+            .product-layout { align-items: start; row-gap: 42px; }
+            .gallery { position: sticky; top: 28px; }
+            .main-image { display: grid; min-height: 440px; padding: 28px; place-items: center; overflow: hidden; border: 1px solid #292929; border-radius: 8px; background: radial-gradient(ellipse at 50% 42%,#292929,#191919 68%,#151515); }
+            .main-image img { display: block; width: 100%; height: 390px; object-fit: contain; filter: grayscale(1); transition: transform .35s ease; }
+            .main-image:hover img { transform: scale(1.025); }
+            .thumbnail-list { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-top: 14px; }
+            .thumbnail { display: grid; min-height: 106px; padding: 9px; place-items: center; overflow: hidden; border: 1px solid #303030; border-radius: 5px; background: #191919; transition: border-color .2s,background .2s; }
+            .thumbnail:first-child,.thumbnail:hover { border-color: #aaa; background: #202020; }
+            .thumbnail img { width: 100%; height: 88px; object-fit: contain; filter: grayscale(1); }
+            .product-copy { padding: 8px 0; }
+            .eyebrow { margin: 0 0 13px; color: #92938d; font-size: .68rem; font-weight: 650; letter-spacing: .18em; text-transform: uppercase; }
+            h1 { margin: 0 0 17px; color: var(--paper); font-size: clamp(1.8rem,3vw,2.55rem); font-weight: 630; letter-spacing: -.055em; line-height: 1.13; }
+            .rating { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 19px; color: #aaa; font-size: .82rem; }
+            .stars { color: #eee; letter-spacing: .1em; }
+            .description { margin: 0 0 26px; color: #aaa; font-size: .94rem; line-height: 1.8; }
+            .specs { width: 100%; margin: 0 0 27px; border-color: #303030; color: #bbb; font-size: .86rem; }
+            .specs th,.specs td { padding: 12px 14px; border-color: #303030; background: transparent; }
+            .specs th { color: #eee; font-weight: 600; }
+            .specs td:first-child { width: 34%; color: #eee; font-weight: 550; }
+            .offer-card { margin-bottom: 20px; border: 1px solid #303030; border-radius: 5px; background: #191919; color: var(--paper); }
+            .offer-card .card-body { display: flex; align-items: center; gap: 16px; padding: 16px; }
+            .offer-mark { display: grid; flex: 0 0 44px; width: 44px; height: 44px; place-items: center; border: 1px solid #555; border-radius: 50%; color: #eee; font-size: .72rem; font-weight: 700; }
+            .offer-title { margin: 0 0 4px; color: #eee; font-size: .82rem; font-weight: 700; letter-spacing: .04em; }
+            .offer-copy { margin: 0; color: #999; font-size: .79rem; }
+            .offer-copy strong { color: #eee; font-weight: 600; }
+            .purchase-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+            .purchase-actions .btn { min-height: 48px; border-radius: 3px; font-size: .82rem; font-weight: 650; transition: .2s; }
+            .purchase-actions .btn-primary { border-color: var(--paper); background: var(--paper); color: #111; }
+            .purchase-actions .btn-primary:hover { background: transparent; color: white; }
+            .purchase-actions .btn-success { border-color: #555; background: transparent; color: #eee; }
+            .purchase-actions .btn-success:hover { border-color: white; background: white; color: #111; }
+            @media(max-width:991px) { .gallery { position: static; } }
+            @media(max-width:575px) { .details-wrap { padding-top: 25px; } .main-image { min-height: 320px; padding: 20px; } .main-image img { height: 275px; } .thumbnail { min-height: 82px; padding: 6px; } .thumbnail img { height: 68px; } .specs th,.specs td { padding: 10px 8px; font-size: .76rem; } .purchase-actions { grid-template-columns: 1fr; } }
+        </style>
+        
+    </head>
+    <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark site-nav">
+    <div class =" container">
+    <a href = "#" class="navbar-brand">
+        Electrokraft
+    </a>
+
+<div class="navbar-nav">
+    <a href="#" class="nav-link">Phones</a>
+     <a href="#" class="nav-link">Audio</a>
+      <a href="#" class="nav-link">Computing</a>
+       <a href="#" class="nav-link">Wearables</a>
+       </div>
+       </div>
+</nav>
+<!--Container Section-->
+<div class="container details-wrap">
+    <div class="row product-layout">
+        <div class="col-lg-6">
+            <div class="gallery">
+            <div class="main-image">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROz9Y6qaBJgJy9t2S6RNa0gUrWByjJbOLC-hMMNfq24A&s=10" class="img-fluid" alt="Nothing Phone (2) in white">
+            </div>
+
+<div class="thumbnail-list" aria-label="Product image thumbnails">
+    <div class="thumbnail"><img src="https://acko-cms.ackoassets.com/Nothing_Phone_2_2_9da103def9.jpg" class="img-fluid" alt="Nothing Phone 2 rear view"></div>
+    <div class="thumbnail"><img src="https://ringke.co.in/cdn/shop/files/NTNGP2_FUSX_Main.jpg?v=1786080560" class="img-fluid" alt="Nothing Phone 2 side view"></div>
+    <div class="thumbnail"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmVZawbmtMvoc1uHNJiLi_djZ9M8TCzsFoY2na6nwYAA&s=10" class="img-fluid" alt="Nothing Phone 2 detail view"></div>
+</div>
+</div>
+</div>
+
+
+    <div class="col-lg-6 product-copy">
+        <p class="eyebrow">Nothing · Smartphones</p>
+        <h1>Nothing Phone (2) (White, 256 GB) (12 GB RAM)</h1>
+<div class="rating"><span class="stars" aria-label="Rated 4.5 out of 5">★★★★★</span><span>4.5 / 5 rating</span></div>
+<p class="description">
+    The Nothing Phone (2) is a mid-to-high-range smartphone featuring a 6.7-inch LTPO OLED display, a Snapdragon 8+ Gen 1 processor, and the signature customizable Glyph LED interface.
+</p>
+<table class="table specs">
+    <thead>
+        <tr>
+            <th>Features</th>
+            <th>Specification</th>
+        </tr>
+        <tr>
+            <td>Display</td>
+            <td>6.7-inch LTPO OLED, 120Hz adaptive refresh rate, 1600 nits peak brightness</td>
+        </tr>
+        <tr>
+            <td>Processor</td>
+            <td>Qualcomm Snapdragon 8+ Gen 1 (4nm)</td>
+        </tr>
+        <tr>
+            <td>
+                Memory & Storage
+            </td>
+            <td>
+                 Available in 8GB/128GB, 12GB/256GB, and 12GB/512GB configurations
+            </td>
+        </tr>
+        <tr><td>Rear Cameras</td>
+        <td>Dual 50 MP main camera (with OIS) and 50 MP ultra-wide camera</td></tr>
+        <tr>
+            <td>
+                Front Camera
+            </td>
+            <td> 32 MP selfie camera</td>
+        </tr>
+    </thead>
+    </table>
+
+<div class="card offer-card">
+    <div class="card-body">
+        <div class="offer-mark" aria-hidden="true">20%</div>
+        <div>
+            <p class="offer-title">20% DISCOUNT FOR 15 DAYS</p>
+            <p class="offer-copy">Use coupon <strong>NOTH 2</strong></p>
+        </div>
+    </div>
+</div>
+<div class="purchase-actions">
+    <button class="btn btn-primary" id="add-to-cart">Add To Cart</button>
+    <button class="btn btn-success" id="buy-now">Buy Now</button>
+</div>
+</div>
+    </div>
+</div>
+
+
+<br>
+<br>
+<br>
+
+    <script>
+const addButton=document.getElementById("add-to-cart");
+addButton.addEventListener("click",()=>{let cart={};try{cart=JSON.parse(localStorage.getItem("electrokraft-cart")||"{}")}catch{}cart.nothing=(Number(cart.nothing)||0)+1;localStorage.setItem("electrokraft-cart",JSON.stringify(cart));addButton.textContent="Added to bag";});
+ document.getElementById("buy-now").addEventListener("click",()=>{addButton.click();window.location.href="cart.html";});
+</script>
+</body>
+</html>

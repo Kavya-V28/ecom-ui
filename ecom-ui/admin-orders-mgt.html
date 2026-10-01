@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111111">
+    <title>Order management | Electrokraft</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        :root { color-scheme: dark; --paper: #f5f5f1; --muted: #999; --line: #303030; }
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; background: #111; color: var(--paper); font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+        a { color: inherit; text-decoration: none; }
+        .site-nav { min-height: 72px; border-bottom: 1px solid rgba(255,255,255,.14); background: #111; }
+        .navbar-brand { color: white !important; font-weight: 750; letter-spacing: -.04em; }
+        .brand-mark { display: inline-grid; width: 28px; height: 28px; margin-right: 9px; place-items: center; border: 1px solid #888; border-radius: 50%; font-size: .72rem; }
+        .navbar-nav { gap: clamp(4px,1.5vw,20px); }
+        .navbar-nav .nav-link { color: #aaa !important; font-size: .86rem; }
+        .navbar-nav .nav-link:hover,.navbar-nav .nav-link.active { color: white !important; }
+        .orders-page { padding-top: clamp(34px,5vw,62px); padding-bottom: 70px; }
+        .page-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+        .eyebrow { margin: 0 0 9px; color: #92938d; font-size: .67rem; font-weight: 650; letter-spacing: .18em; text-transform: uppercase; }
+        h1 { margin: 0; color: var(--paper); font-size: clamp(2rem,4vw,2.7rem); font-weight: 630; letter-spacing: -.065em; }
+        .page-subtitle { margin: 9px 0 0; color: #999; font-size: .86rem; }
+        .order-count { color: #888; font-size: .78rem; white-space: nowrap; }
+        .filter-panel { display: grid; grid-template-columns: minmax(150px,.8fr) minmax(150px,.8fr) auto minmax(220px,1.35fr) auto; align-items: end; gap: 13px; margin-bottom: 22px; padding: 18px; border: 1px solid var(--line); border-radius: 6px; background: #171717; }
+        .filter-field label { display: block; margin: 0 0 7px; color: #aaa; font-size: .72rem; font-weight: 550; }
+        .filter-control { width: 100%; min-height: 43px; padding: 9px 12px; border: 1px solid #393939; border-radius: 4px; outline: 0; background: #101010; color: #eee; font: inherit; font-size: .8rem; }
+        .filter-control:focus { border-color: #aaa; box-shadow: 0 0 0 3px #ffffff12; }
+        .filter-control::-webkit-calendar-picker-indicator { filter: invert(.8); }
+        .filter-button { min-height: 43px; padding: 0 18px; border: 1px solid #eee; border-radius: 3px; background: #eee; color: #111; font-size: .79rem; font-weight: 650; transition: .2s; }
+        .filter-button:hover { background: transparent; color: white; }
+        .search-field { position: relative; }
+        .search-field .filter-control { padding-left: 36px; }
+        .search-icon { position: absolute; top: 50%; left: 13px; color: #777; font-size: .95rem; transform: translateY(-50%); pointer-events: none; }
+        .table-shell { overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: #171717; }
+        .table-responsive { margin: 0; }
+        .orders-table { min-width: 790px; margin: 0; color: #aaa; font-size: .81rem; }
+        .orders-table thead th { padding: 15px 16px; border-bottom: 1px solid #383838; background: #1c1c1c; color: #888; font-size: .66rem; font-weight: 650; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+        .orders-table tbody td { padding: 16px; border-color: #292929; background: transparent; vertical-align: middle; }
+        .orders-table tbody tr:last-child td { border-bottom: 0; }
+        .orders-table tbody tr:hover td { background: #ffffff05; }
+        .serial { color: #777; }
+        .order-number { color: #f0f0ed; font-weight: 600; white-space: nowrap; }
+        .customer-name { color: #ddd; font-weight: 550; }
+        .customer-email { display: block; margin-top: 3px; color: #777; font-size: .72rem; }
+        .order-date,.item-count { white-space: nowrap; }
+        .amount { color: #eee; font-weight: 600; white-space: nowrap; }
+        .status { display: inline-flex; align-items: center; gap: 7px; padding: 6px 9px; border: 1px solid #3b3b3b; border-radius: 999px; color: #ddd; font-size: .69rem; white-space: nowrap; }
+        .status::before { width: 6px; height: 6px; border-radius: 50%; background: currentColor; content: ""; }
+        .status-delivered { border-color: #315542; background: #1b3024; color: #8fd0a4; }
+        .status-processing { border-color: #62502e; background: #302719; color: #e5c17a; }
+        .status-shipped { border-color: #304e62; background: #1b2932; color: #8ec8e7; }
+        .status-cancelled { border-color: #613434; background: #321d1d; color: #e89595; }
+        .view-link { padding: 6px 10px; border: 1px solid #444; border-radius: 3px; color: #ddd; font-size: .72rem; transition: .2s; }
+        .view-link:hover { border-color: #eee; background: #eee; color: #111; }
+        .action-button { padding: 7px 10px; border: 1px solid #444; border-radius: 3px; background: transparent; color: #ddd; font: inherit; font-size: .72rem; white-space: nowrap; transition: .2s; }
+        .action-button:hover { border-color: #eee; background: #eee; color: #111; }
+        .order-dialog { width: min(440px,calc(100% - 32px)); padding: 0; border: 1px solid #3a3a3a; border-radius: 6px; background: #171717; color: var(--paper); }
+        .order-dialog::backdrop { background: #000b; }
+        .dialog-content { padding: 22px; }
+        .dialog-heading { display: flex; align-items: start; justify-content: space-between; gap: 15px; margin-bottom: 20px; }
+        .dialog-heading h2 { margin: 0; font-size: 1.2rem; }
+        .dialog-close { padding: 2px 7px; border: 1px solid #444; border-radius: 3px; background: transparent; color: #ddd; font-size: 1.1rem; }
+        .dialog-data { display: grid; gap: 12px; margin-bottom: 20px; }
+        .dialog-data p { margin: 0; color: #999; font-size: .77rem; }
+        .dialog-data strong { display: block; margin-top: 3px; color: #eee; font-size: .88rem; font-weight: 550; }
+        .dialog-actions { display: flex; justify-content: end; gap: 9px; margin-top: 18px; }
+        .dialog-save { padding: 8px 13px; border: 1px solid #eee; border-radius: 3px; background: #eee; color: #111; font: inherit; font-size: .77rem; font-weight: 650; }
+        .empty-state { display: none; padding: 42px 16px; color: #999; text-align: center; }
+        .table-footer { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 14px 16px; border-top: 1px solid #303030; color: #777; font-size: .72rem; }
+        .pagination-note { color: #aaa; }
+        @media(max-width:900px) { .filter-panel { grid-template-columns: repeat(2,minmax(0,1fr)); } .filter-panel .filter-button { width: 100%; } }
+        @media(max-width:575px) { .site-nav .container { justify-content: center; } .navbar-brand { width: 100%; text-align: center; } .navbar-nav { flex-direction: row; flex-wrap: wrap; justify-content: center; } .navbar-nav .nav-link { padding: 5px 7px; font-size: .74rem; } .orders-page { padding-top: 30px; } .page-heading { align-items: start; flex-direction: column; gap: 12px; } .filter-panel { grid-template-columns: 1fr 1fr; gap: 11px; padding: 14px; } .filter-panel .search-field { grid-column: 1 / -1; } .filter-panel .search-button { grid-column: 1 / -1; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand site-nav" aria-label="Main navigation">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><span class="brand-mark" aria-hidden="true">E</span>Electrokraft</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="index.html#phones">Phones</a>
+                <a class="nav-link" href="index.html#audio">Audio</a>
+                <a class="nav-link" href="index.html#computing">Computing</a>
+                <a class="nav-link" href="index.html#wearables">Wearables</a>
+                <a class="nav-link active" href="admin-orders-mgt.html" aria-current="page">Orders</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container orders-page">
+        <header class="page-heading">
+            <div>
+                <p class="eyebrow">Store administration</p>
+                <h1>Orders management</h1>
+                <p class="page-subtitle">Review customer orders and keep their status up to date.</p>
+            </div>
+            <span class="order-count" id="order-count" aria-live="polite">6 orders</span>
+        </header>
+
+        <form class="filter-panel" id="order-filters">
+            <div class="filter-field">
+                <label for="from-date">From date</label>
+                <input class="filter-control" id="from-date" name="from" type="date">
+            </div>
+            <div class="filter-field">
+                <label for="to-date">To date</label>
+                <input class="filter-control" id="to-date" name="to" type="date">
+            </div>
+            <button class="filter-button" type="submit">Go</button>
+            <div class="filter-field search-field">
+                <label for="order-search">Search orders</label>
+                <span class="search-icon" aria-hidden="true">⌕</span>
+                <input class="filter-control" id="order-search" type="search" placeholder="Order number or customer" autocomplete="off">
+            </div>
+            <button class="filter-button search-button" id="search-button" type="button">Go</button>
+        </form>
+
+        <section class="table-shell" aria-label="Orders list">
+            <div class="table-responsive">
+                <table class="table orders-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">SL</th>
+                            <th scope="col">Order no.</th>
+                            <th scope="col">Order data</th>
+                            <th scope="col">Total qnty</th>
+                            <th scope="col">Total amount</th>
+                            <th scope="col">Order status</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-body">
+                        <tr data-date="2026-09-30" data-search="ek-1048 arjun mehta arjun.mehta@example.com">
+                            <td class="serial">01</td><td class="order-number">#EK-1048</td><td><span class="customer-name">Arjun Mehta</span><span class="customer-email">arjun.mehta@example.com</span><span class="customer-email">30 Sep 2026</span></td><td class="item-count">2</td><td class="amount">₹1,04,998</td><td><span class="status status-processing">Processing</span></td><td><button class="action-button" type="button">View / update</button></td>
+                        </tr>
+                        <tr data-date="2026-09-29" data-search="ek-1047 priya nair priya.nair@example.com">
+                            <td class="serial">02</td><td class="order-number">#EK-1047</td><td><span class="customer-name">Priya Nair</span><span class="customer-email">priya.nair@example.com</span><span class="customer-email">29 Sep 2026</span></td><td class="item-count">1</td><td class="amount">₹12,999</td><td><span class="status status-shipped">Shipped</span></td><td><button class="action-button" type="button">View / update</button></td>
+                        </tr>
+                        <tr data-date="2026-09-28" data-search="ek-1046 rohan kapoor rohan.kapoor@example.com">
+                            <td class="serial">03</td><td class="order-number">#EK-1046</td><td><span class="customer-name">Rohan Kapoor</span><span class="customer-email">rohan.kapoor@example.com</span><span class="customer-email">28 Sep 2026</span></td><td class="item-count">1</td><td class="amount">₹18,499</td><td><span class="status status-delivered">Delivered</span></td><td><button class="action-button" type="button">View / update</button></td>
+                        </tr>
+                        <tr data-date="2026-09-27" data-search="ek-1045 ananya das ananya.das@example.com">
+                            <td class="serial">04</td><td class="order-number">#EK-1045</td><td><span class="customer-name">Ananya Das</span><span class="customer-email">ananya.das@example.com</span><span class="customer-email">27 Sep 2026</span></td><td class="item-count">3</td><td class="amount">₹93,497</td><td><span class="status status-processing">Processing</span></td><td><button class="action-button" type="button">View / update</button></td>
+                        </tr>
+                        <tr data-date="2026-09-26" data-search="ek-1044 vivaan shah vivaan.shah@example.com">
+                            <td class="serial">05</td><td class="order-number">#EK-1044</td><td><span class="customer-name">Vivaan Shah</span><span class="customer-email">vivaan.shah@example.com</span><span class="customer-email">26 Sep 2026</span></td><td class="item-count">1</td><td class="amount">₹79,999</td><td><span class="status status-cancelled">Cancelled</span></td><td><button class="action-button" type="button">View / update</button></td>
+                        </tr>
+                        <tr data-date="2026-09-25" data-search="ek-1043 sara joseph sara.joseph@example.com">
+                            <td class="serial">06</td><td class="order-number">#EK-1043</td><td><span class="customer-name">Sara Joseph</span><span class="customer-email">sara.joseph@example.com</span><span class="customer-email">25 Sep 2026</span></td><td class="item-count">2</td><td class="amount">₹31,498</td><td><span class="status status-delivered">Delivered</span></td><td><button class="action-button" type="button">View / update</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="empty-state" id="empty-state">No orders match those filters.</div>
+            <footer class="table-footer"><span id="showing-count">Showing 6 orders</span><span class="pagination-note">Recent orders</span></footer>
+        </section>
+    </main>
+
+    <dialog class="order-dialog" id="order-dialog" aria-labelledby="dialog-title">
+        <form class="dialog-content" id="order-details-form">
+            <div class="dialog-heading">
+                <h2 id="dialog-title">Order details</h2>
+                <button class="dialog-close" type="button" id="close-dialog" aria-label="Close">&times;</button>
+            </div>
+            <div class="dialog-data">
+                <p>Order number<strong id="dialog-order-number"></strong></p>
+                <p>Customer<strong id="dialog-customer"></strong></p>
+                <p>Order date<strong id="dialog-date"></strong></p>
+                <p>Total quantity<strong id="dialog-quantity"></strong></p>
+                <p>Total amount<strong id="dialog-amount"></strong></p>
+            </div>
+            <label class="filter-field" for="dialog-status">Order status</label>
+            <select class="filter-control" id="dialog-status" name="status">
+                <option>Processing</option>
+                <option>Shipped</option>
+                <option>Delivered</option>
+                <option>Cancelled</option>
+            </select>
+            <div class="dialog-actions">
+                <button class="action-button" type="button" id="cancel-dialog">Cancel</button>
+                <button class="dialog-save" type="submit">Save status</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script>
+        const orders = [...document.querySelectorAll('#orders-body tr')];
+        const filterForm = document.getElementById('order-filters');
+        const fromDate = document.getElementById('from-date');
+        const toDate = document.getElementById('to-date');
+        const searchInput = document.getElementById('order-search');
+        const orderCount = document.getElementById('order-count');
+        const showingCount = document.getElementById('showing-count');
+        const emptyState = document.getElementById('empty-state');
+        const orderDialog = document.getElementById('order-dialog');
+        const orderDetailsForm = document.getElementById('order-details-form');
+        const statusClasses = ['status-processing', 'status-shipped', 'status-delivered', 'status-cancelled'];
+        let activeOrder = null;
+
+        function filterOrders() {
+            const term = searchInput.value.trim().toLowerCase();
+            let visible = 0;
+            orders.forEach(order => {
+                const date = order.dataset.date;
+                const matchesDate = (!fromDate.value || date >= fromDate.value) && (!toDate.value || date <= toDate.value);
+                const matchesSearch = order.dataset.search.includes(term);
+                const show = matchesDate && matchesSearch;
+                order.hidden = !show;
+                if (show) visible++;
+            });
+            orderCount.textContent = `${visible} ${visible === 1 ? 'order' : 'orders'}`;
+            showingCount.textContent = `Showing ${visible} ${visible === 1 ? 'order' : 'orders'}`;
+            emptyState.style.display = visible ? 'none' : 'block';
+        }
+
+        filterForm.addEventListener('submit', event => { event.preventDefault(); filterOrders(); });
+        document.getElementById('search-button').addEventListener('click', filterOrders);
+        searchInput.addEventListener('input', filterOrders);
+
+        document.querySelectorAll('.action-button').forEach(button => {
+            if (button.closest('.dialog-actions')) return;
+            button.addEventListener('click', () => {
+                activeOrder = button.closest('tr');
+                document.getElementById('dialog-order-number').textContent = activeOrder.querySelector('.order-number').textContent;
+                document.getElementById('dialog-customer').textContent = activeOrder.querySelector('.customer-name').textContent;
+                document.getElementById('dialog-date').textContent = activeOrder.querySelectorAll('.customer-email')[1].textContent;
+                document.getElementById('dialog-quantity').textContent = activeOrder.querySelector('.item-count').textContent;
+                document.getElementById('dialog-amount').textContent = activeOrder.querySelector('.amount').textContent;
+                document.getElementById('dialog-status').value = activeOrder.querySelector('.status').textContent.trim();
+                orderDialog.showModal();
+            });
+        });
+
+        orderDetailsForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const status = activeOrder.querySelector('.status');
+            const nextStatus = document.getElementById('dialog-status').value;
+            status.classList.remove(...statusClasses);
+            status.classList.add(`status-${nextStatus.toLowerCase()}`);
+            status.textContent = nextStatus;
+            orderDialog.close();
+        });
+
+        ['close-dialog', 'cancel-dialog'].forEach(id => {
+            document.getElementById(id).addEventListener('click', () => orderDialog.close());
+        });
+    </script>
+</body>
+</html>

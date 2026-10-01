@@ -1,0 +1,107 @@
+Ecommerce website
+
+1. type of business : consumer electronics
+2 . product catalogs
+      - Products
+
+3 . home page:
+      -Display of product categories
+      -display of Products
+      -search bar
+      -Hero section highlighting product
+
+ Display of Products :
+     -Product Card:
+            -image
+            -Title
+            -Price
+            -Add to cart 
+
+
+Hero Section:-
+   2 section
+   -left section : product Animatd Image by codex
+   right section : corresponding content and button to buy the product
+                   
+Flow/Bluprint
+
+1 .  navigation bar- shop name and categories
+2 . hero section
+3 . search box
+4 . product catalogs
+5 . footer
+
+
+prompt for hero section
+
+in ecom-ui,in index.html I am designing a hero section
+which already have a laylout.
+
+left section:
+   - Animated Image matching the theme(black/ white  an E-commerce-Consumer Electronics)
+
+right section:
+   -highlighting  words with respect to Ecommerce site-consumer Electronics
+   - A buy now button
+
+### design should match the design
+
+Prompt for Improvising Search and Product List Section 
+
+Improvising the design of search and product list section
+
+Suggestions
+-Card Edges search
+-Right Font Family and spacing for content
+-Change the image and add references product for internet
+-change the price accordingly
+
+### match the theme and make the design look smooth for search and product list section
+
+Left Section
+-Image(Big Image)
+-Bottom Small 3 Images
+
+Right Section:
+-Title of the Product
+    -Display Category of the Product
+
+-Price of the Product
+-Description of the Product
+-Bank Offers Section(Atleast)
+-Buy Now Button | Add Cart Button
+
+
+Prompt for Improvising Product Detailed Section
+
+Improvising Product Detailed Page (product deatils,html)
+###Keep the layout and comments insdie the html intact
+###Match the theme-let there be theme continuity
+from index.html
+
+Improvise the left section 
+-image daisplay and its corresponding small image at the bottom
+-improvise font family and spacing to make it look neat and professional
+
+prompt Improvise the admin dashboard design 
+
+###Donot change the layout 
+###Donot change the data
+###Match the theme site
+add colors to data points
+add-graph -chart Js
+
+orders management page:
+heading : orders management
+filter : from date| to date | go button | search box | go button |
+order tables : 
+sl|order no.| Order data | Total qnty | Total Amount |Order status | Actions |
+action--> view/updates status (button)
+
+
+
+Javascript----  
+1.Interpreted language(line by line)
+2.Client Side  JS Runs on Browser
+
+DOM 
